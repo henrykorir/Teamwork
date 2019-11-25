@@ -10,7 +10,7 @@ cloudinary.config({
 exports.postGif = (req, res, next) =>{
 	console.clear();
 	let path = req.files[0].path;
-	cloudinary.uploader.upload(path).then(
+	cloudinary.uploader.upload(path,{folder: "test"}).then(
 	(result) =>{
 		console.log(result);
 		res.status(200).json({
@@ -41,22 +41,12 @@ exports.postGif = (req, res, next) =>{
 }
 exports.getGifById = (req, res) =>{
 	let id = req.params.gifId; //id looked in the database
-	console.log(req.params.gifId);
-	//res.end(cloudinary.image("samples/animals/kitten-playing.gif"));
 }
 exports.deleteGifById = (req, res) =>{
 	let id = req.params.gifId; //id looked in the database
-	console.clear();
-	console.log("deleteGifById");
-	res.status(201).json({
-		message: "deleteGifById"
-	});
+	
 }
 exports.postCommentByGifId = (req, res) =>{
 	let id = req.params.gifId; //id looked in the database
-	console.clear();
-	console.log("getGif");
-	res.status(201).json({
-		message: "getGif called"
-	});
+	
 }
