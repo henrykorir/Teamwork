@@ -8,6 +8,7 @@ import articlesRoute from './routes/articles';
 import createUserRoute from './routes/create-user';
 import signInRoute from './routes/signin';
 import feedRoute from './routes/feed';
+import indexRoute from './routes/index';
 import createDatabase from './models/database';
 
 const app = express();
@@ -22,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 createDatabase();
-
+app.use('/', indexRoute);
 app.use(imageUrl, express.static(path.join(__dirname, 'images')));
 app.use(apiUrl, feedRoute);
 app.use(apiUrl, signInRoute);

@@ -12,17 +12,4 @@ const ddl =`${userTable};
 			${gifCommentTable};
 			${SharesTable};
 			`;
-/*
-select *
-from users u 
-inner join gifs g 
-	on u.userid = g.authorid
-inner join gif_comments cg 
-	on g.gifid = cg.gifid
-inner join articles a
-	on u.userid = a.authorid
-inner join article_comments ca
-	on a.articleid = ca.articleid
-order by g.created_at asc, a.created_at asc;
-*/
 export default ddl;
