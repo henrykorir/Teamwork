@@ -1,0 +1,46 @@
+{
+  "name": "teamwork",
+  "version": "1.0.0",
+  "description": "A simple social media app for employees",
+  "main": "server.js",
+  "engines": {
+    "node": "10.x",
+	"npm" : "6.13.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.17.0",
+    "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "pg": "^7.14.0",
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.4",
+    "coveralls": "^3.0.8",
+    "eslint": "^6.7.0",
+    "jasmine": "^3.5.0",
+    "nodemon": "^2.0.0"
+  },
+  "scripts": {
+    "test": "jasmine",
+    "start": "nodemon --exec babel-node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henrykorir/Teamwork.git"
+  },
+  "author": "Henry Korir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henrykorir/Teamwork/issues"
+  },
+  "homepage": "https://github.com/henrykorir/Teamwork#readme"
+}
