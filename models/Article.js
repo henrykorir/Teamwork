@@ -8,6 +8,6 @@ const articleTable =`
 					postId INTEGER NOT NULL,
 					UNIQUE(articleId),
 					PRIMARY KEY(articleId),
-					FOREIGN KEY(postId) REFERENCES Post(postId) ON DELETE CASCADE
+					FOREIGN KEY(postId) REFERENCES Post(postId) ON UPDATE CASCADE ON DELETE CASCADE
 				)`;
 export default articleTable;

@@ -6,7 +6,7 @@ import pool from '../models/config';
 const signIn = (req, res, next) =>{
 	const query = {
 	  name: 'fetch-user',
-	  text: 'SELECT * FROM Users WHERE email = $1',
+	  text: 'SELECT * FROM Employee WHERE email = $1',
 	  values: [req.body.email],
 	};
 	if(Object.keys(req.body).length > 0){

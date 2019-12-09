@@ -18,6 +18,7 @@ export const postGif = (req, res, next) =>{
 		console.log(req.files);
 		cloudinary.uploader.upload(path,{folder: username}).then(
 			(result) =>{
+				console.log(result);
 				const url = JSON.stringify(
 					{
 						http_url: result.url, 
@@ -25,16 +26,21 @@ export const postGif = (req, res, next) =>{
 					}
 				);
 				const query = {
-					text: 	`INSERT INTO Gifs(publicId, authorId, title,description, url, created_at) 
-							VALUES($1, $2, $3, $4, $5, $6) RETURNING *
-							`,
+					text: 	`with insert_post_cte as (
+								insert into Post(authorId, posttime)
+								values($1, now()) 
+								returning postId
+							)
+							insert into Gif(publicId, postId, title, url, description)
+							select $2, insert_post_cte.postId,$3, $4 from insert_post_cte
+						`,
 					values: [
+						parseInt(res.locals.userid),
 						result.public_id,
-						userid,					
-						req.body.title,										
-						req.body.description, 
+						req.body.title,	
 						url,
-						result.created_at.replace('T',' ').replace('Z', ' ')
+						req.body.description
+						/*result.created_at.replace('T',' ').replace('Z', ' ')*/
 					]
 				};
 				pool.connect().then(
@@ -42,6 +48,7 @@ export const postGif = (req, res, next) =>{
 						client.query(query).then(
 							(query_results) => {
 								client.release();
+								console.log(query_results.rows);
 								res.status(200).json({
 									status: "success",
 									data:{

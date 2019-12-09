@@ -7,7 +7,7 @@ const commentTable = `
 							postId    integer NOT NULL,
 							UNIQUE(commentId),
 							PRIMARY KEY(commentId),
-							FOREIGN KEY ( postId ) REFERENCES Post ( postId )
+							FOREIGN KEY ( postId ) REFERENCES Post ( postId ) ON DELETE CASCADE
 						)
 					`;
 export default commentTable;
