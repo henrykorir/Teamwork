@@ -14,14 +14,14 @@ const app = express();
 
 const rootUrl = '/';
 const apiUrl = '/api/v1/';
-const imageUrl = '/images';
 
+const imageUrl = '/images';
+createDatabase();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-createDatabase();
 app.use(imageUrl, express.static(path.join(__dirname, 'images')));
 app.use(apiUrl, feedRoute);
 app.use(apiUrl, signInRoute);

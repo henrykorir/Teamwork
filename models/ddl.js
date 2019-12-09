@@ -1,15 +1,15 @@
-import  userTable from './Users';
-import  gifTable from './Gifs';
-import  articleTable  from './Articles';
-import  articleCommentTable  from './Article-comments';
-import  gifCommentTable  from './Gif-comments';
-import  SharesTable  from './Shares';
+import  userTable from './User';
+import  postTable from './Post';
+import  gifTable from './Gif';
+import  articleTable  from './Article';
+import  commentTable  from './Comment';
+import  ShareTable  from './Share';
 
 const ddl =`${userTable}; 
+			${postTable}; 
 			${gifTable}; 
 			${articleTable}; 
-			${articleCommentTable};
-			${gifCommentTable};
-			${SharesTable};
+			${commentTable};
+			${ShareTable};
 			`;
 export default ddl;

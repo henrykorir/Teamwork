@@ -6,13 +6,13 @@ const getFeed = (req, res, next) =>{
 			const query = {
 				text: `select *
 						from users u 
-						inner join gifs g 
+						left join gifs g 
 							on u.userid = g.authorid
-						inner join gif_comments cg 
+						left join gif_comments cg 
 							on g.gifid = cg.gifid
-						inner join articles a
+						left join articles a
 							on u.userid = a.authorid
-						inner join article_comments ca
+						left join article_comments ca
 							on a.articleid = ca.articleid
 						order by g.created_at asc, a.created_at asc
 						`

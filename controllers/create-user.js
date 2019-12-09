@@ -10,7 +10,7 @@ const createUser  = (req, res, next) =>{
 		bcrypt.hash(req.body.password, 10).then(
 			(hash) =>{
 				const query = {
-					text: 	`INSERT INTO Users(userName, firstName, lastName,email, password, gender, jobRole, department, address) 
+					text: 	`INSERT INTO Employee(userName, firstName, lastName,email, password, gender, jobRole, department, address) 
 							VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
 							`,
 					values: [
