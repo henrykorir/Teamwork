@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const authorize = (req, res, next) => {
 	const authorization = req.headers.authorization;
 	if(authorization === undefined){
-		res.status(401).json({
+		return res.status(401).json({
 			status: 'error',
 			error: 'invalid credentials!'
 		});

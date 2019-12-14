@@ -27,7 +27,7 @@ const createUser  = (req, res, next) =>{
 				};
 				pool.connect().then(
 					(client) => {
-						client.query(query).then(
+						return client.query(query).then(
 							(result) => {
 								client.release();
 								console.clear();
@@ -43,6 +43,7 @@ const createUser  = (req, res, next) =>{
 						)
 						.catch(
 							(error)=> {
+								client.release();
 								console.log(error);
 								res.status(403).json({
 									status: 'error',

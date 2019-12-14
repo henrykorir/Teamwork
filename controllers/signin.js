@@ -12,7 +12,7 @@ const signIn = (req, res, next) =>{
 	if(Object.keys(req.body).length > 0){
 		pool.connect().then(
 			(client) => {
-				client.query(query).then(
+				return client.query(query).then(
 					(result) => {
 						client.release();
 						if(result.rows.length > 0){
@@ -64,6 +64,10 @@ const signIn = (req, res, next) =>{
 					(error)=> {
 						client.release();
 						console.error('query error', error.message, error.stack);
+						res.status(500).json({
+							status: 'error',
+							error: error.message
+						});
 					}
 				)
 			}

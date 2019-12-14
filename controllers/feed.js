@@ -17,7 +17,7 @@ const getFeed = (req, res, next) =>{
 						order by g.created_at asc, a.created_at asc
 						`
 			};
-			client.query(query).then(
+			return client.query(query).then(
 				(results) => {
 					client.release();
 					console.log(results.rows[0]);
