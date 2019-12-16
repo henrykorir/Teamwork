@@ -15,7 +15,10 @@ export const postGif = (req, res, next) =>{
 	if(Object.keys(req).includes('files') && (req.files.length > 0)){
 		const { path } = req.files[0];
 		const {userid, username} = res.locals;
-		cloudinary.uploader.upload(path,{folder: username}).then(
+		console.log(path);
+		console.log(userid);
+		console.log(username);
+		cloudinary.uploader.upload(path,{folder: username, timeout: 60000}).then(
 			(result) =>{
 				console.log('gif uploaded to cloudinary successfully');
 				const url = JSON.stringify(
@@ -34,7 +37,7 @@ export const postGif = (req, res, next) =>{
 							select $2, insert_post_cte.postId,$3, $4, $5, $6 from insert_post_cte returning *
 						`,
 					values: [
-						parseInt(userid),
+						userid,
 						result.public_id,
 						req.body.title,	
 						url,

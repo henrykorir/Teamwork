@@ -4,6 +4,7 @@ export const postArticle = (req, res, next) =>{
 	if(Object.keys(req.body).length === 2 && 
 		Object.keys(req.body).includes('title') && 
 		Object.keys(req.body).includes('content')){
+		const { userid } = res.locals;
 		const query = {
 			text: 	`with insert_post_cte as (
 						insert into Post(authorId)
@@ -14,15 +15,16 @@ export const postArticle = (req, res, next) =>{
 					select insert_post_cte.postId,$2, $3 from insert_post_cte returning *
 				`,
 			values: [
-				parseInt(userid),
+				userid,
 				req.body.title,	
-				req.body.content,
+				req.body.content
 			]
 		};
 		pool.connect().then(
 			(client) => {
 				return client.query(query).then(
 					(results) => {
+						console.log(results.rows);
 						client.release();
 						res.status(201).json({  
 						status:'success',  
