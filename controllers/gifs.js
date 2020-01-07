@@ -114,7 +114,7 @@ export const getGifById = (req, res, next) =>{
 				FROM gif
 				INNER JOIN post
 				ON gif.postid = post.postid
-				INNER JOIN comment
+				LEFT JOIN comment
 				ON comment.postid = gif.postid
 				WHERE gif.gifid = $1`,
 		values: [id]
