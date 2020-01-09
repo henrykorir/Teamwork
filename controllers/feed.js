@@ -8,30 +8,30 @@ const filterFeeds = (results) =>{
 	let post = {};
 	let nextpost = 0;
 	const feeds = results.rows;
-	console.log(feeds);
-    for(let k = 0; k<= feeds.length;k++){
+	console.log(feeds[0]);
+    for(let k = 0; k <= feeds.length;k++){
 		let comment = {};
 		let i = k;
 		if(i === 0){
-			prevpost = Number(feeds[0][11].trim()); 
+			prevpost = Number(feeds[0][10]); 
 			for(let j = 0; j < feeds[i].length ; j++){
-				if(j <= 22)
+				if(j < 22)
 				{
-					post[keys[j]] = feeds[i][j].trim();
+					post[keys[j]] = feeds[i][j];
 				}
 				else 
 				{
-					comment[keys[j]] = feeds[i][j].trim();
+					comment[keys[j]] = feeds[i][j];
 				}
 			}
 			i++;
 		}
 		if( i < feeds.length){
-			nextpost =  Number(feeds[i][11].trim());
+			nextpost =  Number(feeds[i][10]);
 		}
 		else {
 			i--;
-			if(Number(feeds[i][11].trim()) !== Number(feeds[i-1][11].trim())) 
+			if(Number(feeds[i][10]) !== Number(feeds[i-1][10])) 
 				nextpost = 0;
 		}
 		if(prevpost !== nextpost) 
@@ -41,13 +41,13 @@ const filterFeeds = (results) =>{
 			comments = [];
 			post = {};
 			for(let j = 0; j < feeds[i].length; j++){
-				if(j <= 22)
+				if(j < 22)
 				{
-					post[keys[j]] = feeds[i][j].trim();
+					post[keys[j]] = feeds[i][j];
 				}
 				else 
 				{
-					comment[keys[j]] = feeds[i][j].trim();
+					comment[keys[j]] = feeds[i][j];
 				}
 			}
 		
@@ -55,9 +55,9 @@ const filterFeeds = (results) =>{
 		}
 		else
 		{
-			for(let j = 23;j < feeds[i].length; j++)
+			for(let j = 22;j < feeds[i].length; j++)
 			{
-				comment[keys[j]] = feeds[i][j].trim();
+				comment[keys[j]] = feeds[i][j];
 			}
 		}
 		if(Number(feeds[i][23])!==0)
@@ -88,10 +88,11 @@ const getFeed = (req, res, next) =>{
 								on p.postid = a.postid
 						full join Comment c
 								on p.postid = c.postid
-						inner join Employee ec 
+						left join Employee ec 
 								on ec.userid = c.authorid
 						order by p.posttime asc
-						`
+						`,
+				rowMode: 'array',
 			};
 			return client.query(query).then(
 				(results) => {
