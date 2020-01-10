@@ -31,7 +31,7 @@ const filterFeeds = (results) =>{
 		}
 		else {
 			i--;
-			if(Number(feeds[i][10]) !== Number(feeds[i-1][10])) 
+			if(Number(feeds[i][10]) !== Number(feeds[i-1][10]) && feeds.length > 1) 
 				nextpost = 0;
 		}
 		if(prevpost !== nextpost) 
