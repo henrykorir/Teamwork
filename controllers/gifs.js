@@ -128,12 +128,12 @@ export const getGifById = (req, res, next) =>{
 						let comments = [];
 						records.forEach((row) => {
 							let temp = {};
-							//if(row.commentid !== 0){
+							if(row.commentid !== null){
 								temp.commentId = row.commentid;
 								temp.comment = row.comment;
 								temp.authorId = row.authorid;
 								comments.push(temp);
-							//}
+							}
 						});
 						res.status(200).json({
 							status: 'success',
