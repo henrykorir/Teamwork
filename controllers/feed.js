@@ -21,7 +21,7 @@ const getFeed = (req, res, next) =>{
 								p.posttime as createdOn, 
 								COALESCE(g.title, a.title) AS title,
 								COALESCE(g.url, a.content) as "article/url", 
-								p.postid as id,
+								p.postid,
 								e.userId as "authorId", 
 								e.userName, CONCAT(e.firstName,' ',e.lastname) as ownername, 
 								e.email, e.age, e.gender, e.jobrole, e.department, e.address, e.managerid,   
