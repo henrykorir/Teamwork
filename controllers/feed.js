@@ -19,8 +19,10 @@ const getFeed = (req, res, next) =>{
 			const query = {
 				text: `select   e.userId, e.userName, CONCAT(e.firstName,' ',e.lastname) as ownername, e.email, e.age, e.gender, e.jobrole, e.department, e.address, e.managerid, 
 								p.postid, p.posttime, 
-								g.gifid, g.title, g.description, g.url, g.cloudinary_upload_time,
-								a.articleid, a.title, a.content, a.created_at,COALESCE(g.url, a.content) as "feed_body",
+								COALESCE(g.gifid,a.articleid) AS itemid, 
+								COALESCE(g.title, a.title) AS item_title,
+								COALESCE(g.url, a.content) as feed_body, g.description, g.cloudinary_upload_time,
+								a.created_at,
 								c.commentid, c.authorid,CONCAT(ec.firstName, ' ', ec.lastname) as commentorname,c.comment, c.commented_at
 						from 	Employee e
 						inner join Post p 
@@ -39,21 +41,12 @@ const getFeed = (req, res, next) =>{
 			return client.query(query).then(
 				(results) => {
 					client.release();
-					if(results.rowCount > 0){
-						console.log(results.rows);
-						const feeds = groupBy(results.rows, "postid");
-						res.status(200).json({
-							status: "success",
-							data: feeds
-						});	
-					}
-					else 
-					{
-						res.status(200).json({
-							status: 'success',
-							data: 'No feeds yet'
-						});
-					}
+					console.log(results.rows);
+					const feeds = groupBy(results.rows, "postid");
+					res.status(200).json({
+						status: "success",
+						data: feeds
+					});	
 				}
 			)
 			.catch(
