@@ -17,11 +17,15 @@ const getFeed = (req, res, next) =>{
 	pool.connect().then(
 		(client) => {
 			const query = {
-				text: `select   e.userId, e.userName, CONCAT(e.firstName,' ',e.lastname) as ownername, e.email, e.age, e.gender, e.jobrole, e.department, e.address, e.managerid, 
-								p.postid, p.posttime, 
-								COALESCE(g.gifid,a.articleid) AS itemid, 
-								COALESCE(g.title, a.title) AS item_title,
-								COALESCE(g.url, a.content) as feed_body, g.description, g.cloudinary_upload_time,
+				text: `select   COALESCE(g.gifid,a.articleid) AS id, 
+								p.posttime as createdOn, 
+								COALESCE(g.title, a.title) AS title,
+								COALESCE(g.url, a.content) as "article/url", 
+								p.postid as id,
+								e.userId as "authorId", 
+								e.userName, CONCAT(e.firstName,' ',e.lastname) as ownername, 
+								e.email, e.age, e.gender, e.jobrole, e.department, e.address, e.managerid,   
+								g.description, g.cloudinary_upload_time,
 								a.created_at,
 								c.commentid, c.authorid,CONCAT(ec.firstName, ' ', ec.lastname) as commentorname,c.comment, c.commented_at
 						from 	Employee e
