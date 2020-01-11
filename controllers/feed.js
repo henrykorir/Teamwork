@@ -1,73 +1,16 @@
 import pool from '../models/config';
 
-const filterFeeds = (results) =>{
-	let keys = results.fields.map(field => field.name);
-	let prevpost = 0;
-	const data = [];
-	let comments = [];
-	let post = {};
-	let nextpost = 0;
-	const feeds = results.rows;
-	console.log(feeds[0]);
-    for(let k = 0; k <= feeds.length;k++){
-		let comment = {};
-		let i = k;
-		if(i === 0){
-			prevpost = Number(feeds[0][10]); 
-			for(let j = 0; j < feeds[i].length ; j++){
-				if(j < 22)
-				{
-					post[keys[j]] = feeds[i][j];
-				}
-				else 
-				{
-					comment[keys[j]] = feeds[i][j];
-				}
-			}
-			i++;
-		}
-		if( i < feeds.length){
-			nextpost =  Number(feeds[i][10]);
-		}
-		else {
-			i--;
-			if(Number(feeds[i][10]) !== Number(feeds[i-1][10]) && feeds.length > 1) 
-				nextpost = 0;
-		}
-		if(prevpost !== nextpost) 
-		{
-			post['comments']=comments;
-			data.push(post);
-			comments = [];
-			post = {};
-			for(let j = 0; j < feeds[i].length; j++){
-				if(j < 22)
-				{
-					post[keys[j]] = feeds[i][j];
-				}
-				else 
-				{
-					comment[keys[j]] = feeds[i][j];
-				}
-			}
-		
-			prevpost =  nextpost;
-		}
-		else
-		{
-			for(let j = 22;j < feeds[i].length; j++)
-			{
-				comment[keys[j]] = feeds[i][j];
-			}
-		}
-		if(Number(feeds[i][23])!==0)
-			comments.push(comment);
-	}
-	const response = {
-		status: 'success',
-		data
-	}
-	return response;
+// Accepts the array and key
+const groupBy = (array, key) => {
+  // Return the end result
+  return array.reduce((result, currentValue) => {
+    // If an array already present for key, push it to the array. Else create an array and push the object
+    (result[currentValue[key]] = result[currentValue[key]] || []).push(
+      currentValue
+    );
+    // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+    return result;
+  }, {}); // empty object is the initial value for result object
 };
 
 const getFeed = (req, res, next) =>{
@@ -92,15 +35,15 @@ const getFeed = (req, res, next) =>{
 								on ec.userid = c.authorid
 						order by p.posttime asc
 						`,
-				rowMode: 'array',
 			};
 			return client.query(query).then(
 				(results) => {
 					client.release();
 					if(results.rowCount > 0){
-						const feeds = filterFeeds(results);
+						const feeds = groupBy(results.rows, "postid");
 						res.status(200).json({
-							feeds
+							status: "success",
+							data: feeds
 						});	
 					}
 					else 
