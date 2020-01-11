@@ -40,6 +40,7 @@ const getFeed = (req, res, next) =>{
 				(results) => {
 					client.release();
 					if(results.rowCount > 0){
+						console.log(results.rows);
 						const feeds = groupBy(results.rows, "postid");
 						res.status(200).json({
 							status: "success",
