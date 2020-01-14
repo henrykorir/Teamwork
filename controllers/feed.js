@@ -4,7 +4,7 @@ const getComments = (array) => {
 	return array.reduce((comment,pair) =>{
 		let [key,value] = pair;
 		if(comment[key] !== null){
-			omment[key] = value;
+			comment[key] = value;
 		}
 		return comment;
 	},{});
@@ -16,6 +16,7 @@ const groupBy = (array) => {
 	let cmt = 0;
 	// Return the end result
 	return array.reduce((result, currentValue) => {
+		console.log(JSON.stringify(result));
 	  let entries = Object.entries(currentValue);
 	  if(prevPostId !== currentValue.postid){
 		  let post = {};
@@ -27,7 +28,7 @@ const groupBy = (array) => {
 		  }
 		  cmt = i; //set the comment point
 		  post["comments"] = [];
-		  if(currentValue[commentid] !== null){
+		  if(currentValue.commentid !== null){
 			  let comment = getComments(entries.splice(cmt));
 			  post["comments"].push(comment);
 		  }
@@ -37,13 +38,13 @@ const groupBy = (array) => {
 		  idx = result.data.length - 1; 
 	  }
 	  else{
-		  if(currentValue[commentid] !== null){
+		  if(currentValue.commentid !== null){
 			  let comment = getComments(entries.splice(cmt));
-			  //result.data[idx].comments.push(comment);
+			  result.data[idx].comments.push(comment);
 		  }
 	  }
 	  return result;
-  }, {status: "success",data:[]}); // empty object is the initial value for result object
+  }, {status: "success",data:[]}); 
 };
 
 const getFeed = (req, res, next) =>{
@@ -78,7 +79,6 @@ const getFeed = (req, res, next) =>{
 			return client.query(query).then(
 				(results) => {
 					client.release();
-					console.log(results.rows);
 					const feeds = groupBy(results.rows);
 					res.status(200).json({
 						feeds
