@@ -1,7 +1,7 @@
 import pool from '../models/config';
 
-const getComments = (array, index) => {
-	return array.reduce((comment,pair,index, array) =>{
+const getComments = (array) => {
+	return array.reduce((comment,pair) =>{
 		let [key,value] = pair;
 		if(comment[key] !== null){
 			omment[key] = value;
@@ -39,7 +39,7 @@ const groupBy = (array) => {
 	  else{
 		  if(currentValue[commentid] !== null){
 			  let comment = getComments(entries.splice(cmt));
-			  result.data.[idx].comments.push(comment);
+			  //result.data[idx].comments.push(comment);
 		  }
 	  }
 	  return result;
