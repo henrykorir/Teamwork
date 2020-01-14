@@ -1,16 +1,49 @@
 import pool from '../models/config';
 
-// Accepts the array and key
-const groupBy = (array, key) => {
-  // Return the end result
-  return array.reduce((result, currentValue) => {
-    // If an array already present for key, push it to the array. Else create an array and push the object
-    (result[currentValue[key]] = result[currentValue[key]] || []).push(
-      currentValue
-    );
-    // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-    return result;
-  }, {}); // empty object is the initial value for result object
+const getComments = (array, index) => {
+	return array.reduce((comment,pair,index, array) =>{
+		let [key,value] = pair;
+		if(comment[key] !== null){
+			omment[key] = value;
+		}
+		return comment;
+	},{});
+}
+// Accepts the array 
+const groupBy = (array) => {
+	let prevPostId = 0;
+	let idx = 0;
+	let cmt = 0;
+	// Return the end result
+	return array.reduce((result, currentValue) => {
+	  let entries = Object.entries(currentValue);
+	  if(prevPostId !== currentValue.postid){
+		  let post = {};
+		  let i = 0;
+		  for(; i < entries.length; i++){
+			  let [key, value] = entries[i];
+			  if(key === "commentid")break;
+			  post[key] = value;
+		  }
+		  cmt = i; //set the comment point
+		  post["comments"] = [];
+		  if(currentValue[commentid] !== null){
+			  let comment = getComments(entries.splice(cmt));
+			  post["comments"].push(comment);
+		  }
+		  prevPostId = currentValue.postid;
+		  result.data.push(post);
+		  
+		  idx = result.data.length - 1; 
+	  }
+	  else{
+		  if(currentValue[commentid] !== null){
+			  let comment = getComments(entries.splice(cmt));
+			  result.data.[idx].comments.push(comment);
+		  }
+	  }
+	  return result;
+  }, {status: "success",data:[]}); // empty object is the initial value for result object
 };
 
 const getFeed = (req, res, next) =>{
@@ -21,13 +54,13 @@ const getFeed = (req, res, next) =>{
 								p.posttime as createdOn, 
 								COALESCE(g.title, a.title) AS title,
 								COALESCE(g.url, a.content) as "article/url", 
-								p.postid,
-								e.userId as "authorId", 
+								e.userId as "authorId",
+								p.postid, 
 								e.userName, CONCAT(e.firstName,' ',e.lastname) as ownername, 
 								e.email, e.age, e.gender, e.jobrole, e.department, e.address, e.managerid,   
 								g.description, g.cloudinary_upload_time,
 								a.created_at,
-								c.commentid, c.authorid,CONCAT(ec.firstName, ' ', ec.lastname) as commentorname,c.comment, c.commented_at
+								c.commentid, c.authorid as commentorId,CONCAT(ec.firstName, ' ', ec.lastname) as commentorname,c.comment, c.commented_at
 						from 	Employee e
 						inner join Post p 
 								on e.userid = p.authorid
@@ -46,10 +79,9 @@ const getFeed = (req, res, next) =>{
 				(results) => {
 					client.release();
 					console.log(results.rows);
-					const feeds = groupBy(results.rows, "postid");
+					const feeds = groupBy(results.rows);
 					res.status(200).json({
-						status: "success",
-						data: feeds
+						feeds
 					});	
 				}
 			)
