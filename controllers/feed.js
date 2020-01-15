@@ -80,9 +80,7 @@ const getFeed = (req, res, next) =>{
 				(results) => {
 					client.release();
 					const feeds = groupBy(results.rows);
-					res.status(200).json({
-						groupBy(results.rows);
-					});	
+					res.status(200).json(feeds);	
 				}
 			)
 			.catch(
