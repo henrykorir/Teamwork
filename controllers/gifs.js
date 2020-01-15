@@ -223,7 +223,7 @@ export const deleteGifById = (req, res) =>{
 	let publicid = res.locals.publicid;
 
 	const query = {
-		text: `DELETE FROM Post WHERE EXISTS ( SELECT * FROM Gif WHERE gifid = $1 ) AND post.authorid = $2 RETURNING *`,
+		text: `DELETE FROM Post WHERE post.postid IN  ( SELECT postId FROM Gif WHERE gifid = $1 ) AND post.authorId = $2 RETURNING *`,
 		values: [gifid, userid]
 	};
 	pool.connect().then(
