@@ -1,5 +1,5 @@
 const commentTable = `
-						DROP TABLE IF EXISTS Comment CASCADE;
+						
 						CREATE TABLE IF NOT EXISTS Comment
 						(
 							commentId integer NOT NULL GENERATED ALWAYS AS IDENTITY (start 1),

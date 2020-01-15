@@ -1,5 +1,5 @@
 const postTable =`
-					DROP TABLE IF EXISTS Post CASCADE;
+					
 					CREATE TABLE IF NOT EXISTS Post
 					(
 						postId   integer NOT NULL GENERATED ALWAYS AS IDENTITY (start 1),

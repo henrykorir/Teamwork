@@ -1,5 +1,5 @@
 const articleTable =`
-					DROP TABLE IF EXISTS Article CASCADE;
+					
 					CREATE TABLE IF NOT EXISTS Article(
 					articleId INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (start 1),
 					postId INTEGER NOT NULL,

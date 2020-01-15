@@ -1,5 +1,5 @@
 const shareTable = `
-						DROP TABLE IF EXISTS Share CASCADE;
+						
 						CREATE TABLE IF NOT EXISTS Share
 						(
 							shareId   integer NOT NULL GENERATED ALWAYS AS IDENTITY (start 1 ),

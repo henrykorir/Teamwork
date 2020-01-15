@@ -1,5 +1,5 @@
 const gifTable = `
-				DROP TABLE IF EXISTS Gif CASCADE;
+				
 				CREATE TABLE IF NOT EXISTS Gif
 				(
 					gifId  INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (start 1),

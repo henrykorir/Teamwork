@@ -1,5 +1,5 @@
 const EmployeeTable = `
-					DROP TABLE IF EXISTS Employee CASCADE;
+					
 					CREATE TABLE IF NOT EXISTS Employee
 					(
 						userId  INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (start 1),
