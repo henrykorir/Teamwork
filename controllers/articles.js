@@ -130,7 +130,7 @@ export const deleteArticleById = (req, res, next) =>{
 	let articleid = parseInt(req.params.articleId); 
 	let userid = parseInt(res.locals.userid);
 	const query = {
-		text: `DELETE FROM Article WHERE post.postid IN  ( SELECT postId FROM Article WHERE articleId = $1 ) AND post.authorId = $2 RETURNING *``,
+		text: `DELETE FROM Article WHERE post.postid IN  ( SELECT postId FROM Article WHERE articleId = $1 ) AND post.authorId = $2 RETURNING *`,
 		values: [articleid, userid]
 	};
 	pool.connect().then(
