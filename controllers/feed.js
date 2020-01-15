@@ -79,7 +79,8 @@ const getFeed = (req, res, next) =>{
 			return client.query(query).then(
 				(results) => {
 					client.release();
-					const feeds = groupBy(results.rows);
+					const feeds = {};
+					feeds = groupBy(results.rows);
 					res.status(200).json({
 						feeds
 					});	
