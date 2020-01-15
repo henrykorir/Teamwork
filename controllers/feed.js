@@ -79,7 +79,7 @@ const getFeed = (req, res, next) =>{
 			return client.query(query).then(
 				(results) => {
 					client.release();
-					const feeds = {};
+					let feeds = {};
 					feeds = groupBy(results.rows);
 					res.status(200).json({
 						feeds
