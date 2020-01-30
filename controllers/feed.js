@@ -73,7 +73,7 @@ const getFeed = (req, res, next) =>{
 								on p.postid = c.postid
 						left join Employee ec 
 								on ec.userid = c.authorid
-						order by p.posttime asc
+						order by p.posttime desc
 						`,
 			};
 			return client.query(query).then(
@@ -85,7 +85,6 @@ const getFeed = (req, res, next) =>{
 			)
 			.catch(
 				(error)=> {
-					//client.release();
 					console.log(error);
 					res.status(403).json({
 						status: 'error',

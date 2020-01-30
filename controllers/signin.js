@@ -28,7 +28,8 @@ const signIn = (req, res, next) =>{
 										{
 											userId: result.rows[0].userid,
 											userName: result.rows[0].username,
-											email: result.rows[0].email
+											email: result.rows[0].email,
+											loggedin:'false'
 										}, 
 										'HENRY',
 										{
@@ -39,7 +40,7 @@ const signIn = (req, res, next) =>{
 										status:'success',
 										data:{
 											token: token,
-											email: result.rows
+											userid: result.rows[0].userid
 										}
 									});
 								}

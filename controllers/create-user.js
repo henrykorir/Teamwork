@@ -35,6 +35,10 @@ const createUser  = (req, res, next) =>{
 								console.log('User account successfully created');
 								const token = jwt.sign(
 									{
+										userId: result.rows[0].userid,
+										userName: result.rows[0].username,
+										email: result.rows[0].email,
+										loggedin:'false'
 										role: 'user'
 									}, 
 									'HENRY',
@@ -46,8 +50,8 @@ const createUser  = (req, res, next) =>{
 									status:'success',
 									data : {
 										message:'User account successfully created',
-										userId: result.rows[0].userid,
-										token: token
+										token: token,
+										userId: result.rows[0].userid
 									}
 								});
 							}
