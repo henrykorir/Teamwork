@@ -29,7 +29,7 @@ const signIn = (req, res, next) =>{
 											userId: result.rows[0].userid,
 											userName: result.rows[0].username,
 											email: result.rows[0].email,
-											loggedin:'false'
+											loggedin:'true'
 										}, 
 										'HENRY',
 										{
