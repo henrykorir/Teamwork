@@ -7,6 +7,7 @@ const createUser  = (req, res, next) =>{
 	console.clear();
 	console.log("creating user ...");
 	if(Object.keys(req.body).length > 0){
+		
 		bcrypt.hash(req.body.password, 10).then(
 			(hash) =>{
 				const query = {
@@ -32,11 +33,21 @@ const createUser  = (req, res, next) =>{
 								client.release();
 								console.clear();
 								console.log('User account successfully created');
+								const token = jwt.sign(
+									{
+										role: 'user'
+									}, 
+									'HENRY',
+									{ 
+										expiresIn: '24h'
+									}
+								);
 								res.status(201).json({
 									status:'success',
 									data : {
 										message:'User account successfully created',
-										userId: result.rows[0].userid
+										userId: result.rows[0].userid,
+										token: token
 									}
 								});
 							}
